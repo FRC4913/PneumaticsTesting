@@ -26,10 +26,17 @@ public class Robot extends TimedRobot {
 	private static final String kCustomAuto = "My Auto";
 	private String m_autoSelected;
 	private SendableChooser<String> m_chooser = new SendableChooser<>();
-	private DoubleSolenoid doublesolenoid = new DoubleSolenoid(0,1);
-	//1st argument is forward, 2nd argument is backwards
+	int forwardPort = 0;
+	int reversePort = 1;
+	int openPort = forwardPort;
+	int closePort = reversePort;
+	private DoubleSolenoid doublesolenoidLeft = new DoubleSolenoid(openPort,closePort);
+	//1st argument is forward,open, 2nd argument is backward, close
+	//private DoubleSolenoid doublesolenoidRight = new DoubleSolenoid(2,3);
 	private XboxController controller = new XboxController(0);
-	boolean toggle = false;
+	//boolean toggle = false;
+	//boolean XboxState;
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -85,13 +92,30 @@ public class Robot extends TimedRobot {
 	
 	
 	public void teleopPeriodic() {
-		if(controller.getAButton()) {
+		/*XboxState = controller.getAButtonPressed();
+		if(XboxState) {
+			toggle = !toggle;
+		}
+		if(XboxState == true && toggle) {
+			doublesolenoidLeft.set(DoubleSolenoid.Value.kForward);
+		}
+		else if(XboxState == true && toggle == false) {
+			doublesolenoidLeft.set(DoubleSolenoid.Value.kReverse);
+		}
+		*/
+		
+		
+		if(controller.getAButtonPressed()) {
 			//A is to open
-			doublesolenoid.set(DoubleSolenoid.Value.kForward);
+			doublesolenoidLeft.set(DoubleSolenoid.Value.kForward);
+			//doublesolenoidRight.set(DoubleSolenoid.Value.kReverse);
+
 			//forward is assumed to be open, to push the pistons out
-		} else if(controller.getBButton()) {
+		} else if(controller.getBButtonPressed()) {
 			//B is to close
-			doublesolenoid.set(DoubleSolenoid.Value.kReverse);
+			doublesolenoidLeft.set(DoubleSolenoid.Value.kReverse);
+			//doublesolenoidRight.set(DoubleSolenoid.Value.kForward);
+
 			//reverse is assumed to be close, to pull pistons in
 		}
 	}
