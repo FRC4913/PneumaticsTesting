@@ -32,6 +32,7 @@ public class Robot extends TimedRobot {
 	int closePort = reversePort;
 	private DoubleSolenoid doublesolenoidLeft = new DoubleSolenoid(openPort,closePort);
 	//1st argument is forward,open, 2nd argument is backward, close
+	
 	//private DoubleSolenoid doublesolenoidRight = new DoubleSolenoid(2,3);
 	private XboxController controller = new XboxController(0);
 	//boolean toggle = false;
